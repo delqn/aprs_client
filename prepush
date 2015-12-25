@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+if test -n "$(git status --porcelain)"
+  then printf "There are uncommitted changes:\n`git status --porcelain`\n"; exit 1
+fi
+
+current_ref=$(git symbolic-ref HEAD)
+while read local_ref local_sha remote_ref remote_sha
+do
+  if [ "$local_ref" != "$current_ref" ]
+    then echo "Cannot push $local_ref while on $current_ref. Check out $local_ref and push from there"; exit 1
+  fi
+done
+
+echo "Testing and linting..."
+make lint

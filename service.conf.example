@@ -1,0 +1,5 @@
+[aprs]
+callsign = XYZ
+callpass = ABC
+server = abc.def
+port = 123456
